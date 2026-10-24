@@ -14,30 +14,30 @@ def extract(api_url, max_retries=3):
             data = response.json()
             if not isinstance(data, dict):
                 raise ValueError(
-                    "DATA Error : data is not a dict"
+                    "Data Error : data must be a dict"
                 )
 
             if not isinstance(data["data"], dict):
                 raise ValueError(
-                    "DATA Error : data[\"data\"] is not a dict"
+                    "Data Error : data[\"data\"] must be a dict"
                 )
             
             stations = data["data"]["stations"]
             if not isinstance(stations, list):
                 raise ValueError(
-                    "DATA Error : stations is not a list"
+                    "Data Error : stations must be a list"
                 )
             
             for station in stations:
                 if not isinstance(station, dict):
                     raise ValueError(
-                        "DATA Error : each station needs to be a dict"
+                        "Data Error : each station must be a dict"
                     )
                   
             last_updated = data["last_updated"]
-            if not isinstance(last_updated, str) or last_updated == "":
+            if not isinstance(last_updated, str) or not last_updated.strip():
                 raise ValueError(
-                    "DATA Error : last_updated is not a string or is empty"
+                    "Data Error : last_updated must be a non-empty string"
                 )
 
             try:
