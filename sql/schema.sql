@@ -2,7 +2,7 @@
 -- Each row represents one unique station.
 CREATE TABLE station_infos(
     station_id TEXT,
-    name TEXT NOT NULL,
+    name TEXT,
     lat NUMERIC(9,6),
     lon NUMERIC(9,6),
     address TEXT,

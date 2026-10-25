@@ -39,8 +39,8 @@ def validate_station_infos(stations):
         if not isinstance(station_id, str) or not station_id.strip():
             raise ValueError("Data error: station_id must be a non-empty string")
 
-        if not isinstance(name, str) or not name.strip():
-            raise ValueError("Data error: name must be a non-empty string")
+        if not isinstance(name, str):
+            raise ValueError("Data error: name must be a string")
 
         if not isinstance(lat, (int,float)) or isinstance(lat, bool) or not math.isfinite(lat):
             raise ValueError("Data error: lat must be a finite number")
