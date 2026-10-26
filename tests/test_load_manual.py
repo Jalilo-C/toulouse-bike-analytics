@@ -1,13 +1,17 @@
 import psycopg
 from datetime import datetime, timezone
 from src.load import load_station_infos, load_station_status
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conn = psycopg.connect(
-    host="localhost",
-    dbname="postgres",
-    user="postgres",
-    password="Abdeldjalil*2006",
-    port=5432
+    host=os.environ["POSTGRES_HOST"],
+    port=int(os.environ["POSTGRES_PORT"]),
+    dbname=os.environ["POSTGRES_DB"],
+    user=os.environ["POSTGRES_USER"],
+    password=os.environ["POSTGRES_PASSWORD"]
 )
 
 stations = [
