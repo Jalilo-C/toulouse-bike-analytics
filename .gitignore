@@ -7,3 +7,5 @@ logs/
 dbt/target/
 dbt/logs/
 .vscode
+.env.*
+!.env.example
