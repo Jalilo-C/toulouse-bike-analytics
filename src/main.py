@@ -7,12 +7,13 @@ from src.transform import transform_station_infos, transform_station_status
 from src.load import load_station_infos, load_station_status
 from src.database import get_connection
 
-def run_pipeline():
+def run_pipeline(collected_at=None):
     logging.info("Pipeline started")
     INFO_URL = "https://api.cyclocity.fr/contracts/toulouse/gbfs/v3/station_information.json"
     STATUS_URL = "https://api.cyclocity.fr/contracts/toulouse/gbfs/v3/station_status.json"
 
-    collected_at = datetime.now(timezone.utc)
+    if collected_at is None:
+        collected_at = datetime.now(timezone.utc)
 
     _, station_infos = extract(INFO_URL)
     last_updated_status, station_status = extract(STATUS_URL)
@@ -36,7 +37,7 @@ def run_pipeline():
             logging.error(f"Loading failed: {e}")
             raise
 
-        logging.info("Loading complete: stations loaded successfully")
+    logging.info("Loading complete: stations loaded successfully")
 
 
 if __name__ == "__main__":

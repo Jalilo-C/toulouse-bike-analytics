@@ -9,3 +9,9 @@ dbt/logs/
 .vscode
 .env.*
 !.env.example
+# Airflow runtime files
+config/airflow.cfg
+logs/
+airflow/logs/
+airflow/config/
+airflow/plugins/
