@@ -22,8 +22,36 @@ def toulouse_bike_pipeline():
         from src.main import run_pipeline
         context = get_current_context()
         logical_date = context["logical_date"]
-        run_pipeline(logical_date)
+        return run_pipeline(logical_date)
 
-    run_etl()
+    @task
+    def quality_check(expected_count):
+        from src.database import get_connection
+
+        context = get_current_context()
+        logical_date = context["logical_date"]
+
+        with get_connection() as conn:
+            with conn.cursor() as cur: 
+                query_nb_stations_per_snapshot = """
+                            SELECT COUNT(*)
+                            FROM station_status
+                            WHERE collected_at = %s
+                        """
+
+                cur.execute(query_nb_stations_per_snapshot, (logical_date,))
+                nb_stations_per_snapshot = cur.fetchone()[0]
+
+        print(f"NB stations per snapshot: {nb_stations_per_snapshot}")
+        print(f"Expected count : {expected_count}")
+
+        if nb_stations_per_snapshot == 0:
+            raise ValueError("DATA Error: snapshot is empty")
+
+        if nb_stations_per_snapshot!=expected_count:
+            raise ValueError("DATA Error: station count mismatch")
+    
+    etl = run_etl()
+    quality_check(etl)
 
 toulouse_bike_pipeline()

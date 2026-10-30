@@ -38,6 +38,7 @@ def run_pipeline(collected_at=None):
             raise
 
     logging.info("Loading complete: stations loaded successfully")
+    return len(station_status_transformed)
 
 
 if __name__ == "__main__":
