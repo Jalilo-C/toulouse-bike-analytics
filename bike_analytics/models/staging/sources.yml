@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: toulouse_bikes
+    schema: public
+    tables:
+      - name: station_infos
+      - name: station_status

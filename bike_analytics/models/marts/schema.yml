@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: dim_station
+    description: "Dimension containing information about VélÔToulouse stations"
+
+    columns:
+      - name: station_id
+        description: "Unique identifier of a station"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: station_name
+        description: "Name of a station, can be NULL"
+
+  - name: dim_time
+    description: "Dimension containing time information"
+
+    columns:
+      - name: collected_at
+        description: "unique identifier of a collection"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: hour
+        description: "Local hour of collection"
+
+  - name: fct_station_availability
+    description: "Fact table containing bike availability snapshots"
+
+    columns:
+      - name: station_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_station')
+                field: station_id
+
+      - name: collected_at
+        data_tests:
+          - not_null
