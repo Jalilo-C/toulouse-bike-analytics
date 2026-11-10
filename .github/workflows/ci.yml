@@ -19,11 +19,34 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install requirements
+      - name: Install python requirements
         run: python -m pip install -r requirements.txt
 
       - name: Install pytest
         run: python -m pip install pytest
 
-      - name: Run unit tests
+      - name: Run python unit tests
         run: python -m pytest tests/ --ignore=tests/test_load_manual.py
+
+    dbt-check:
+    runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_USER: ci_user
+      POSTGRES_PASSWORD: ci_dummy_password
+      POSTGRES_DB: ci_database
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dbt requirements
+        run: python -m pip install -r requirements-dbt.txt
+
+      - name: Validate dbt project
+        run: dbt parse --project-dir dbt --profiles-dir airflow/dbt-profiles
