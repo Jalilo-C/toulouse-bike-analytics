@@ -51,7 +51,40 @@ def toulouse_bike_pipeline():
         if nb_stations_per_snapshot!=expected_count:
             raise ValueError("DATA Error: station count mismatch")
     
+    @task
+    def dbt_run():
+        import subprocess
+
+        subprocess.run(
+            [
+                "/home/airflow/dbt-venv/bin/dbt",
+                "run",
+                "--project-dir", "/opt/airflow/dbt",
+                "--profiles-dir", "/opt/airflow/dbt-profiles"
+            ],
+            check=True
+        )
+
+    @task
+    def dbt_test():
+        import subprocess
+
+        subprocess.run(
+            [
+                "/home/airflow/dbt-venv/bin/dbt",
+                "test",
+                "--project-dir", "/opt/airflow/dbt",
+                "--profiles-dir", "/opt/airflow/dbt-profiles"
+            ],
+            check=True
+        )
+
     etl = run_etl()
-    quality_check(etl)
+    quality = quality_check(etl)
+
+    run = dbt_run()
+    test = dbt_test()
+
+    quality >> run >> test
 
 toulouse_bike_pipeline()

@@ -3,3 +3,8 @@ FROM apache/airflow:3.3.2
 COPY requirements.txt /requirements.txt
 
 RUN pip install --no-cache-dir -r /requirements.txt
+
+COPY requirements-dbt.txt /requirements-dbt.txt
+
+RUN python -m venv /home/airflow/dbt-venv \
+    && /home/airflow/dbt-venv/bin/pip install --no-cache-dir -r /requirements-dbt.txt
