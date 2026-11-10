@@ -1,23 +1,27 @@
+# Local configuration
 .env
+.env.*
+!.env.example
+
+# Python environments
 .venv/
+.venv-dbt/
+
+# Python
 __pycache__/
 .pytest_cache/
 *.pyc
-logs/
-dbt/target/
-dbt/logs/
-.vscode
-.env.*
-!.env.example
-# Airflow runtime files
-config/airflow.cfg
-logs/
+
+# IDE
+.vscode/
+
+# Airflow
+airflow.cfg
 airflow/logs/
 airflow/config/
 airflow/plugins/
+
 # dbt
-.venv-dbt/
 **/target/
 **/dbt_packages/
 **/logs/
-.env
