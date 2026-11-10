@@ -325,7 +325,7 @@ Python and dbt can be run locally for development, but the project is designed a
 ### 1. Clone the Repository
 
 ```bash
-git clone <https://github.com/Jalilo-C/toulouse-bike-analytics.git>
+git clone https://github.com/Jalilo-C/toulouse-bike-analytics.git
 cd toulouse-bike-analytics
 ```
 
