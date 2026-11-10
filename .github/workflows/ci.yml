@@ -28,7 +28,7 @@ jobs:
       - name: Run python unit tests
         run: python -m pytest tests/ --ignore=tests/test_load_manual.py
 
-    dbt-check:
+  dbt-check:
     runs-on: ubuntu-latest
 
     env:
