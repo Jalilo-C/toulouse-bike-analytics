@@ -25,5 +25,5 @@ jobs:
       - name: Install pytest
         run: python -m pip install pytest
 
-      - name: Run tests
-        run: python -m pytest
+      - name: Run unit tests
+        run: python -m pytest tests/ --ignore=tests/test_load_manual.py
